@@ -5,7 +5,7 @@ depends:
   plugin:
   - gui
   - settings
-version: '1.0'
+version: '3.0.0'
 author: moguno
 name: mikutter_tab_icon_size
 description: "タブアイコンのサイズを変更します。"
