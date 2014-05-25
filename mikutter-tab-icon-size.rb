@@ -7,21 +7,21 @@ Plugin.create :tab_icon_size do
 
   # replace tab_update_icon()
   Plugin[:gtk].instance_eval {
-    def tab_update_icon_ex(i_tab)
-      type_strict i_tab => Plugin::GUI::TabLike
+    alias :tab_update_icon_org :tab_update_icon
+
+    def tab_update_icon(i_tab)
+      ret = tab_update_icon_org(i_tab)
 
       tab = widgetof(i_tab)
+
       if tab
         tab.remove(tab.child) if tab.child
         if i_tab.icon.is_a?(String)
           tab.add(::Gtk::WebIcon.new(i_tab.icon, UserConfig[:tab_icon_size], UserConfig[:tab_icon_size]).show)
         else
           tab.add(::Gtk::Label.new(i_tab.name).show) end end
-      self 
+      ret
     end
-
-    alias :tab_update_icon2 :tab_update_icon
-    alias :tab_update_icon :tab_update_icon_ex
   }
 
   on_boot do
